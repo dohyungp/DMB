@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block head_extra %}
+    {{ form.media }}
+{% endblock head_extra %}
+
+{% block content %}
+
+    <header id="gtco-header" class="gtco-cover gtco-cover-xs" role="banner" style="background-image:url({% static 'images/img_bg_1-1.jpg'%});">
+        <div class="overlay"></div>
+        <div class="gtco-container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <div class="display-t">
+                        <div class="display-tc">
+                            <h1 class="animate-box" data-animate-effect="fadeInUp">파트너스 등록</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="gtco-section">
+        <div class="gtco-container">
+            <div class="row row-pb-md">
+                <div class="col-md-6 animate-box">
+                    <h3>게시물 작성</h3>
+                    <form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
+                        {{ form | crispy }}
+                        <input type="submit" class="btn btn-primary btn-lg" value="글쓰기"/>
+                    </form>
+                </div>
+                <div class="col-md-5 col-md-push-1 animate-box">
+
+                    <div class="gtco-contact-info">
+                        <h3>게시물 미리보기</h3>
+                        <div class="content-preview">
+                            <h3 id="preview-title"></h3>
+                            <p id="preview-content" style="word-break:break-all;"></p>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {#    <div class="col-sm-6">#}
+    {#        <h1>미리보기</h1>#}
+    {#        <div class="content-preview">#}
+    {#            <h3 id="preview-title"></h3>#}
+    {#            <p id="preview-content"></p>#}
+    {#        </div>#}
+    {#    </div>#}
+
+{% endblock content %}

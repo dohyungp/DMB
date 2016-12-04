@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load urlify %}
+{% load crispy_forms_tags %}
+{% block head_title %}
+    {{ instance.title }} | {{ block.super }}
+{% endblock head_title %}
+
+
+
+{% block content %}
+    <div class='col-sm-6 col-sm-offset-3'>
+        <h1>삭제 확인</h1>
+
+        <form method="POST" action=".">{% csrf_token %}
+            <p>"{{ object.content }}"를 삭제하시겠습니까?</p>
+            <input type="submit" value="확인" class="btn btn-warning">
+            <a href="{{ object.get_absolute_url }}" class="btn btn-default">취소</a>
+        </form>
+    </div>
+
+
+    <hr/>
+    </div>
+
+
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block head_extra %}
+    {{ form.media }}
+{% endblock head_extra %}
+
+{% block content %}
+    <header id="gtco-header" class="gtco-cover gtco-cover-xs" role="banner" style="background-image:url({% static 'images/img_bg_1-1.jpg'%});">
+        <div class="overlay"></div>
+        <div class="gtco-container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <div class="display-t">
+                        <div class="display-tc">
+                            <h1 class="animate-box" data-animate-effect="fadeInUp">{{ title }}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="gtco-features" class="gtco-section animated">
+        <div class="col-sm-6 col-sm-offset-3">
+            <h1>{{ title }}</h1>
+            <form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
+                {{ form | crispy }}
+                <input type="submit" class="btn btn-primary" value="확인"/>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

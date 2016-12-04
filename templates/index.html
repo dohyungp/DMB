@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+    <header id="gtco-header" class="gtco-cover" role="banner" style="background-image:url({% static 'images/img_bg_1-1.jpg' %});">
+        <div class="overlay"></div>
+        <div class="gtco-container">
+            <div class="row">
+                <div class="col-md-12 col-md-offset-0 text-left">
+                    <div class="display-t">
+                        <div class="display-tc">
+                            <h1 class="animate-box" data-animate-effect="fadeInUp">효과적인 공모전 팀빌딩 플랫폼</h1>
+                            <h2 class="animate-box" data-animate-effect="fadeInUp"> IT공모전을 준비하는 당신을 위한 서비스 <a href="" target="_blank">eumaru.com</a></h2>
+                            {% if not request.user.is_authenticated %}<p class="animate-box" data-animate-effect="fadeInUp"><a href="register" class="btn btn-white btn-lg btn-outline">무료로 회원가입하기</a></p>
+                            {% else %}<p class="animate-box" data-animate-effect="fadeInUp"><a href="#" class="btn btn-white btn-lg btn-outline">사이트 이용방법 보기</a></p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="gtco-features-3">
+        <div class="gtco-container">
+            <div class="gtco-flex">
+                <div class="feature feature-1 animate-box" data-animate-effect="fadeInUp">
+                    <div class="feature-inner">
+						<span class="icon">
+							<i class="ti-search"></i>
+						</span>
+                        <h3>등록된 프로젝트 찾기</h3>
+                        <p>현재 이음마루에 등록된 프로젝트들 중에 당신이 원하는 프로젝트에 참여해보세요. </p>
+                        <p><a href="#" class="btn btn-white btn-outline">프로젝트 찾기</a></p>
+                    </div>
+                </div>
+                <div class="feature feature-2 animate-box" data-animate-effect="fadeInUp">
+                    <div class="feature-inner">
+						<span class="icon">
+							<i class="ti-blackboard"></i>
+						</span>
+                        <h3>이음마루 파트너스 목록</h3>
+                        <p>당신이 원하는 역량을 보유한 파트너의 목록을 지금 당장 찾아보세요. </p>
+                        <p><a href="/posts" class="btn btn-white btn-outline">파트너스 찾기</a></p>
+                    </div>
+                </div>
+                <div class="feature feature-3 animate-box" data-animate-effect="fadeInUp">
+                    <div class="feature-inner">
+						<span class="icon">
+							<i class="ti-pencil"></i>
+						</span>
+                        <h3>팀 모집공고 등록</h3>
+                        <p>당신이 진행하고 싶은 프로젝트를 직접 등록해보세요. </p>
+                        <p><a href="#" class="btn btn-white btn-outline">프로젝트 등록</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="gtco-counter" class="gtco-section">
+        <div class="gtco-container">
+
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
+                    <h2>이음마루 이용통계</h2>
+                    <p>다음과 같은 수많은 회원 여러분들이 우리 이음마루를 이용해주시고 있습니다.</p>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInLeft">
+                    <div class="feature-center">
+						<span class="icon">
+							<i class="ti-search"></i>
+						</span>
+                        <span class="counter js-counter" data-from="0" data-to="{{ count }}" data-speed="1000" data-refresh-interval="50">1</span>
+                        <span class="counter-label">팀원 모집 중인 프로젝트 수</span>
+
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInLeft">
+                    <div class="feature-center">
+						<span class="icon">
+							<i class="ti-face-smile"></i>
+						</span>
+                        <span class="counter js-counter" data-from="0" data-to="{{ count }}" data-speed="1000" data-refresh-interval="50">1</span>
+                        <span class="counter-label">등록된 이음마루 파트너 수</span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInLeft">
+                    <div class="feature-center">
+						<span class="icon">
+							<i class="ti-briefcase"></i>
+						</span>
+                        <span class="counter js-counter" data-from="0" data-to="{{ count }}" data-speed="1000" data-refresh-interval="50">1</span>
+                        <span class="counter-label">모집완료된 프로젝트 수</span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInLeft">
+                    <div class="feature-center">
+						<span class="icon">
+							<i class="ti-envelope"></i>
+						</span>
+                        <span class="counter js-counter" data-from="0" data-to="{{ count }}" data-speed="1000" data-refresh-interval="50">1</span>
+                        <span class="counter-label">등록된 포트폴리오 수</span>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

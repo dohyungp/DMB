@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load urlify %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block head_title %}
+    {{ instance.title }} | {{ block.super }}
+{% endblock head_title %}
+
+{% block content %}
+    <header id="gtco-header" class="gtco-cover gtco-cover-xs" role="banner" style="background-image:url({% static 'images/img_bg_1-1.jpg'%});">
+        <div class="overlay"></div>
+        <div class="gtco-container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <div class="display-t">
+                        <div class="display-tc">
+                            <h1 class="animate-box" data-animate-effect="fadeInUp">파트너스 상세보기</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="gtco-features" class="gtco-section animated">
+        <div class='col-sm-6 col-sm-offset-3'>
+            {% if instance.image %}
+                <img src='{{ instance.image.url }}' class='img-responsive' />
+            {% endif %}
+            <h1>{{ title }} <small>{% if instance.draft %}<span style='color:red;'>초안</span> {% endif %}{{ instance.publish }}</small></h1>
+            <p> 예상 소요 시간 : {% if instance.read_time <= 1 %}1분 미만{% else %}{{ instance.read_time }} 분{% endif %}</p>
+            {% if instance.user.username %}
+                <p>글쓴이: {{ instance.user.username }}</p>
+            {% endif %}
+
+            <p><div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+            <hr/>
+            </p>
+
+            <div class='row'>
+                <div class='col-sm-12'>
+                    <div class="post-detail-item">{{ instance.get_markdown }}</div>
+
+                    <hr/>
+                    {% if request.user == instance.user %}
+                        <a href="{{ instance.get_update_url }}" class="btn btn-default" role="button">수정</a>
+                        <a href="{{ instance.get_delete_url }}" class="btn btn-warning" role="button">삭제</a>
+                    {% endif %}
+                    <hr/>
+                    <div>
+                        <p class="lead">댓글</p>
+                        {% if request.user.is_authenticated %}
+                            <form method="POST" action=".">{% csrf_token %}
+                                {{ comment_form | crispy}}
+                                <input type="submit" value="댓글 달기" class="btn btn-default">
+                            </form>
+                        {% else %}
+                            <p>댓글을 다시려면 로그인을 해주세요.</p>
+                        {% endif %}
+                        <hr/>
+                        {% for comment in comments %}
+                            <blockquote>
+                                <p>{{ comment.content }}</p>
+                                <footer> {{ comment.user }} | {{ comment.timestamp | timesince }} 전{% if comment.children.count > 0 %} {{ comment.children.count }} <i class="fa fa-comment-o"></i> | {% endif %}<a class="comment-reply-btn" href="#"> 답글 달기</a> |
+                                    <a class="" href="{{ comment.get_absolute_url }}"> 댓글목록</a>
+                                </footer>
+                                <div class="comment-reply">
+                                    {% for child_comment in comment.children %}
+                                        <blockquote>
+                                            <p>{{ child_comment.content }}</p>
+                                            <footer> {{ child_comment.user }} | {{ child_comment.timestamp | timesince }} 전</footer>
+
+                                        </blockquote>
+                                    {% endfor %}
+
+                                    {% if request.user.is_authenticated %}
+                                        <form method="POST" action=".">{% csrf_token %}
+                                            {{ comment_form | crispy}}
+                                            <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                                            <input type="submit" value="답글 달기" class="btn btn-default">
+                                        </form>
+                                    {% else %}
+                                        <p>댓글을 다시려면 로그인을 해주세요.</p>
+                                    {% endif %}
+
+                                </div>
+
+                            </blockquote>
+
+                            <hr/>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

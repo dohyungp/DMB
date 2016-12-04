@@ -1,0 +1,206 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>공모전 멤버를 이어드립니다, 이음마루</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="공모전 팀빌딩 웹사이트 '이음마루' 입니다." />
+    <meta name="keywords" content="공모전, 팀빌딩, 멤버, 팀원" />
+    <meta name="author" content="아주대 DMB" />
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content=""/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content=""/>
+    <meta property="og:site_name" content=""/>
+    <meta property="og:description" content=""/>
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:card" content="" />
+
+    <title>{% block head_title %}이음마루{% endblock head_title %}</title>
+
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.css"/>
+
+    <!-- Latest compiled and minified CSS -->
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}"/>
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="{% static 'css/icomoon.css' %}"/>
+    <!-- Themify Icons-->
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}"/>
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"/>
+    <!-- star rating -->
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}"/>
+
+    <!-- Owl Carousel  -->
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}"/>
+
+    <!-- Theme style  -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+
+    <style>
+        {% block style %}{% endblock style %}
+    </style>
+    {% block head_extra %}{% endblock head_extra %}
+</head>
+<body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.8";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+{#{% include "messages_display.html" %}#}
+<div class="gtco-loader"></div>
+
+<div id="page">
+    <!-- 네이게이션 <nav class="gtco-nav" role="navigation">-->
+    <nav class="gtco-nav" role="navigation">
+        <div class="gtco-container">
+
+            <div class="row">
+                <div class="col-sm-4 col-xs-12">
+                    <div id="gtco-logo"><a href="/">이음마루<em>.</em></a></div>
+                </div>
+                <div class="col-xs-8 text-right menu-1">
+                    <ul>
+                        <li class="active"><a href="/">이음마루</a></li>
+                        <li><a href="#">파트너스 등록</a></li>
+                        <li><a href="{% url 'posts:list' %}">파트너스 찾기</a></li>
+                        <li><a href="{% url 'posts:create' %}">프로젝트 등록</a></li>
+                        <li><a href="{% url 'posts:list' %}">프로젝트 찾기</a></li>
+                        {% if not request.user.is_authenticated %}<li><a id="login" href="/login" style="color: #1acea6">로그인</a></li>
+                        {% else %}<li><a id="login" href="/logout" style="color: #1acea6">로그아웃</a></li>{% endif %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+
+
+
+    {% block content %}{% endblock content %}
+    <footer id="gtco-footer" role="contentinfo" style="background-color: black" style="color: #1acea6">
+        <div class="gtco-container">
+            <div class="row row-p   b-md">
+                <div class="col-md-4">
+                    <div class="gtco-widget">
+                        <h3 style="color: white">About Us</h3>
+                        <p style="color: #1acea6">2016년 12월 8일 새롭게 출시한 이음마루는 회원님들에게 최적의 파트너스를 추천해드립니다. 최고의 팀원과 함께 마음껏 능력을 발휘해 보세요.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-md-push-1">
+                    <div class="gtco-widget">
+                        <h3 style="color: white">OUR MEMBER</h3>
+                        <ul class="gtco-footer-links" style="color: #1acea6">
+                            <li>최현승</li>
+                            <li>박도형</li>
+                            <li>염겨레</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gtco-widget">
+                        <h3 style="color: white">Get In Touch</h3>
+                        <ul class="gtco-quick-contact" style="color: #1acea6">
+                            <li><i class="icon-phone"></i> 010-2232-4594</li>
+                            <li><i class="icon-mail2"></i> duarufp@naver.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row copyright">
+                <div class="col-md-12">
+                    <p class="pull-left" style="color: #1acea6">
+                        <small class="block">&copy; 2016 (주)이음마루. All Rights Reserved.</small>
+                        <small class="block">Designed by Park.</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="gototop js-top">
+        <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+    </div>
+</div>
+<!-- Latest compiled and minified JavaScript -->
+<!-- jQuery -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<!-- jQuery Easing -->
+<script src="{% static 'js/jquery.easing.1.3.js'%}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- Waypoints -->
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<!-- Carousel -->
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<!-- countTo -->
+<script src="{% static 'js/jquery.countTo.js' %}"></script>
+<!-- Magnific Popup -->
+<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'js/magnific-popup-options.js' %}"></script>
+<!-- Main -->
+<script src="{% static 'js/main.js' %}"></script>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js'></script>
+
+<!-- Star rating js -->
+<script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".content-markdown").each(function(){
+            var content = $(this).text()
+            var markedContent = marked(content)
+            $(this).html(markedContent)
+        })
+        $(".post-detail-item img").each(function(){
+            $(this).addClass("img-responsive");
+        })
+
+        var contentInput = $("#id_content");
+        function setContent(value){
+            var markedContent = marked(value)
+            $("#preview-content").html(markedContent)
+            $("#preview-content img").each(function(){
+                $(this).addClass("img-responsive")
+            })
+        }
+        setContent(contentInput.val())
+        contentInput.keyup(function(){
+            var newContent = $(this).val()
+            setContent(newContent)
+        })
+        var titleInput = $("#id_title");
+
+        function setTitle(value) {
+            $("#preview-title").text(value)
+        }
+        setTitle(titleInput.val())
+        titleInput.keyup(function(){
+            var newContent = $(this).val()
+            setTitle(newContent)
+        })
+        $(".comment-reply-btn").click(function (event) {
+            event.preventDefault();
+            $(this).parent().next(".comment-reply").fadeToggle();
+
+        })
+    })
+</script>
+</body>
+</html>
+

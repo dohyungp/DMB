@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+    <header id="gtco-header" class="gtco-cover gtco-cover-xs" role="banner" style="background-image:url({% static 'images/img_bg_1-1.jpg'%});">
+        <div class="overlay"></div>
+        <div class="gtco-container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <div class="display-t">
+                        <div class="display-tc">
+                            <h1 class="animate-box" data-animate-effect="fadeInUp">{{ title }}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="gtco-counter" class="gtco-section animated">
+        <div class="col-md-6 col-md-offset-3 animate-box">
+
+            <form method='GET' action='' class='row'>
+                <div class='col-sm-6'>
+                    <div class='input-group input-group-lg'>
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-primary dropdown-toggle" name="category" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">분류 <span class="caret"></span></button>
+                            {% for category in  categories%}
+                                <ul class="dropdown-menu">
+                                    <li><a href="?category={{ category }}">{{ category }}</a></li>
+                                </ul>
+                            {% endfor %}
+                        </div><!-- /btn-group -->
+                        <input class='form-control' type='text' name='q' placeholder='포트폴리오 검색' value='{{ request.GET.q }}'/>
+                        <span class='input-group-btn'>
+                            <button class='btn btn-primary' type='submit'>검색</button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+
+            {% for obj in object_list %}
+                <div class="row">
+
+                    <div class="col-sm-12">
+                        <div class="thumbnail">
+                            {% if obj.image %}
+                                <img src="{{ obj.image.url }}" class="img-responsive">
+                            {% endif %}
+                            <div class="caption post-detail-item">
+                                {% if obj.draft %}<h3>Staff Only : Draft</h3>{% endif %}
+                                {% if obj.publish > today %}<h3>Staff Only : Future Post</h3>{% endif %}
+                                <h3><a href='{{ obj.get_absolute_url }}'>{{ obj.title }}</a><small> <br/>{{ obj.publish }}</small></h3>
+                                {% if obj.user.get_full_name %}<p>Author : {{ obj.user.get_full_name }}</p>{% endif %}
+                                {{ obj.get_markdown | truncatechars_html:50}}<br/>
+                                <p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary btn-lg" role="button">보기</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    </hr>
+                </div>
+            {% endfor %}
+
+            <div class="pagination">
+    <span class="step-links">
+        {% if object_list.has_previous %}
+            <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">이전</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ object_list.number }} / {{ object_list.paginator.num_pages }}.
+        </span>
+
+        {% if object_list.has_next %}
+            <a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">다음</a>
+        {% endif %}
+    </span>
+            </div>
+
+        </div>
+    </div>
+{% endblock content %}

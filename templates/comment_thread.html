@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load urlify %}
+{% load crispy_forms_tags %}
+{% block head_title %}
+    {{ instance.title }} | {{ block.super }}
+{% endblock head_title %}
+
+
+
+{% block content %}
+    {{ object }}
+    <div class='col-sm-6 col-sm-offset-3'>
+
+        <p>{{ comment.content }}</p>
+        <footer> {{ comment.user }} | {{ comment.timestamp | timesince }} 전{% if comment.children.count > 0 %} {{ comment.children.count }} <i class="fa fa-comment-o"></i> {% endif %}
+            {% if request.user == comment.user %}<a href="{{ comment.get_delete_url }}">삭제</a>{% endif %}
+        </footer>
+        <hr/>
+        <div>
+            {% for child_comment in comment.children %}
+                <blockquote>
+                    <p>{{ child_comment.content }}</p>
+                    <footer> {{ child_comment.user }} | {{ child_comment.timestamp | timesince }} 전 |
+                        {% if request.user == comment.user %}<a href="{{ child_comment.get_delete_url }}">삭제</a>{% endif %}</footer>
+
+                </blockquote>
+            {% endfor %}
+            {% if request.user.is_authenticated %}
+                <form method="POST" action=".">{% csrf_token %}
+                    {{ form | crispy}}
+                    <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                    <input type="submit" value="답글 달기" class="btn btn-default">
+                </form>
+            {% else %}
+                <p>댓글을 다시려면 로그인을 해주세요.</p>
+            {% endif %}
+
+        </div>
+
+
+        <hr/>
+    </div>
+
+
+{% endblock content %}
