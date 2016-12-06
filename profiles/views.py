@@ -7,11 +7,13 @@ from .models import Profile
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from star_ratings.models import UserRating
+from portfolio.models import Portfolio
+from .recommendations import getRecommendations
 # Create your views here.
 @login_required
 def profile_create(request):
-    # if not request.user.is_staff or not request.user.is_superuser:
-    #     raise Http404
+
     if not request.user.is_authenticated():
         raise Http404
 
@@ -43,13 +45,13 @@ def profile_detail(request, slug=None):
         "title": "프로필",
         "instance": instance,
     }
-    return render(request, "portfolio_detail.html", context)
+    return render(request, "profile_detail.html", context)
 
 @login_required
 def profile_update(request, slug=None):
-    # if not request.user.is_staff or not request.user.is_superuser:
-    #     raise Http404
     instance = get_object_or_404(Profile, slug=slug)
+    if not instance.user == request.user:
+        raise Http404
     form = UserProfileForm(request.POST or None, request.FILES or None, instance=instance)
     if form.is_valid():
         instance = form.save(commit=False)
@@ -63,7 +65,25 @@ def profile_update(request, slug=None):
     }
     return render(request, "form.html", context)
 
+@login_required
 def profile_list(request):
+    eval = {}
+    port = []
+    # EvalTb로 부터 eval_data 딕셔너리 만들기
+    for e in UserRating.objects.all():
+        eval.setdefault(e.user, {})
+        eval[e.user][e.rating.object_id] = float(e.score)
+    print(eval)
+    selfie = request.user
+    recommandList = Profile.objects.none()
+    if UserRating.objects.filter(user=selfie).exists():
+        RecommendPF = getRecommendations(eval, selfie)
+        for p in Portfolio.objects.all():
+            for (rank, pid) in RecommendPF:
+                if p.id == pid and p.user != selfie:
+                    recommandList = recommandList | (Profile.objects.filter(user=p.user))
+
+    print(recommandList)
     queryset_list = Profile.objects.all()
     query = request.GET.get("q")
     if query:
@@ -89,5 +109,6 @@ def profile_list(request):
         "object_list": queryset,
         "title": "파트너스 찾기",
         "page_request_var": page_request_var,
+        "recommandList": recommandList,
     }
     return render(request, "profile_list.html", context)

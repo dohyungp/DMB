@@ -19,123 +19,76 @@
 
     <div id="gtco-counter" class="gtco-section animated">
         <div class="col-md-6 col-md-offset-3 animate-box">
-            <div class='row'>
-                <div class='col-sm-12'>
-                    <div class="carousel slide" data-ride="carousel" id="quote-carousel">
-                        <!-- Bottom Carousel Indicators -->
-                        <ol class="carousel-indicators">
-                            <li data-target="#quote-carousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#quote-carousel" data-slide-to="1"></li>
-                            <li data-target="#quote-carousel" data-slide-to="2"></li>
-                        </ol>
-
-                        <!-- Carousel Slides / Quotes -->
-                        <div class="carousel-inner">
-
-                            <!-- Quote 1 -->
-                            <div class="item active">
-                                <blockquote>
-                                    <div class="row">
-                                        <div class="col-sm-3 text-center">
-                                            <img class="img-circle" src="http://www.reactiongifs.com/r/overbite.gif" style="width: 100px;height:100px;">
-                                            <!--<img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" style="width: 100px;height:100px;">-->
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit!</p>
-                                            <small>Someone famous</small>
-                                        </div>
-                                    </div>
-                                </blockquote>
-                            </div>
-                            <!-- Quote 2 -->
-                            <div class="item">
-                                <blockquote>
-                                    <div class="row">
-                                        <div class="col-sm-3 text-center">
-                                            <img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/mijustin/128.jpg" style="width: 100px;height:100px;">
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam auctor nec lacus ut tempor. Mauris.</p>
-                                            <small>Someone famous</small>
-                                        </div>
-                                    </div>
-                                </blockquote>
-                            </div>
-                            <!-- Quote 3 -->
-                            <div class="item">
-                                <blockquote>
-                                    <div class="row">
-                                        <div class="col-sm-3 text-center">
-                                            <img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/keizgoesboom/128.jpg" style="width: 100px;height:100px;">
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum elit in arcu blandit, eget pretium nisl accumsan. Sed ultricies commodo tortor, eu pretium mauris.</p>
-                                            <small>Someone famous</small>
-                                        </div>
-                                    </div>
-                                </blockquote>
+            <div class="row">
+                <div class="owl-carousel owl-carousel-carousel col-sm-6 col-md-4">
+                    {% for recommand in recommandList %}
+                        <div class="thumbnail">
+                            {% if recommand.avatar %}
+                                 <img src="{{ recommand.avatar.url }}" style="max-width: 242px; max-height: 200px; min-width: 200px; min-height: 200px;">
+                            {% else %}
+                                <img src="{% static 'images/default_avatar.png' %}" style="max-width: 242px; max-height: 200px; min-width: 200px; min-height: 200px;">
+                            {% endif %}
+                            <div class="caption">
+                                <h3><a href="{{ recommand.get_absolute_url }}">{{ recommand.user.username }}</a></h3>
+                                <p>{{ recommand.bio | truncatechars:10 }}</p>
+                                <p><a href="{{ recommand.get_absolute_url }}" class="btn btn-primary" role="button">보기</a></p>
                             </div>
                         </div>
-
-                        <!-- Carousel Buttons Next/Prev -->
-                        <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
-                        <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a>
-
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
 
-
-
-
-
-
-    <div id="gtco-counter" class="gtco-section animated">
-        <div class="col-md-6 col-md-offset-3 animate-box">
-            <form method='GET' action='' class='row'>
-                <div class='col-sm-6'>
-                    <div class='input-group input-group-lg'>
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-primary dropdown-toggle" name="category" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">분류 <span class="caret"></span></button>
-                            {% for category in  categories%}
-                                <ul class="dropdown-menu">
-                                    <li><a href="?category={{ category }}">{{ category }}</a></li>
-                                </ul>
-                            {% endfor %}
-                        </div><!-- /btn-group -->
-                        <input class='form-control' type='text' name='q' placeholder='포트폴리오 검색' value='{{ request.GET.q }}'/>
-                        <span class='input-group-btn'>
+    <div class="col-md-6 col-md-offset-3 animate-box">
+        <form method='GET' action='' class='row'>
+            <div class='col-sm-6'>
+                <div class='input-group input-group-lg'>
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-primary dropdown-toggle" name="category" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">분류 <span class="caret"></span></button>
+                        {% for category in  categories%}
+                            <ul class="dropdown-menu">
+                                <li><a href="?category={{ category }}">{{ category }}</a></li>
+                            </ul>
+                        {% endfor %}
+                    </div><!-- /btn-group -->
+                    <input class='form-control' type='text' name='q' placeholder='포트폴리오 검색' value='{{ request.GET.q }}'/>
+                    <span class='input-group-btn'>
                             <button class='btn btn-primary' type='submit'>검색</button>
                         </span>
-                    </div>
                 </div>
-            </form>
+            </div>
+        </form>
 
-            {% for obj in object_list %}
-                <div class="row">
+        {% for obj in object_list %}
+            <div class="row">
 
-                    <div class="col-sm-12">
-                        <div class="thumbnail">
-                            {% if obj.image %}
-                                <img src="{{ obj.image.url }}" class="img-responsive">
-                            {% endif %}
-                            <div class="caption post-detail-item">
-                                {% if obj.draft %}<h3>Staff Only : Draft</h3>{% endif %}
-                                {% if obj.publish > today %}<h3>Staff Only : Future Post</h3>{% endif %}
-                                <h3><a href='{{ obj.get_absolute_url }}'>{{ obj.title }}</a><small> <br/>{{ obj.publish }}</small></h3>
-                                {% if obj.user.get_full_name %}<p>Author : {{ obj.user.get_full_name }}</p>{% endif %}
-                                {{ obj.get_markdown | truncatechars_html:50}}<br/>
-                                <p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary btn-lg" role="button">보기</a></p>
+                <div class="col-sm-12">
+                    <div class="thumbnail">
+                        <div class="media">
+                            <div class="media-left media-middle">
+                                <a href="{{ obj.get_absolute_url }}">
+                                    {% if obj.avatar %}
+                                        <img class="media-object" src="{{ obj.avatar.url }}" style="max-width: 200px; max-height: 200px; min-width: 200px; min-height: 200px;">
+                                    {% else %}
+                                        <img class="media-object" src="{% static 'images/default_avatar.png' %}" style="max-width: 200px; max-height: 200px; min-width: 200px; min-height: 200px;">
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                {% if obj.user.username %}
+                                    <h2 class="media-heading"><a href="{{ obj.get_absolute_url }}">{{ obj.user.username }}</a></h2>
+                                {% endif %}
+                                {{ obj.get_markdown | truncatechars_html:100}}<br/>
                             </div>
                         </div>
                     </div>
                     </hr>
                 </div>
-            {% endfor %}
+            </div>
+        {% endfor %}
 
-            <div class="pagination">
+        <div class="pagination">
     <span class="step-links">
         {% if object_list.has_previous %}
             <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">이전</a>
@@ -149,8 +102,8 @@
             <a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">다음</a>
         {% endif %}
     </span>
-            </div>
-
         </div>
+
     </div>
+
 {% endblock content %}

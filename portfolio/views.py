@@ -18,6 +18,7 @@ except:
 
 # Create your views here.
 
+
 @login_required
 def portfolio_create(request):
     # if not request.user.is_staff or not request.user.is_superuser:
@@ -50,7 +51,6 @@ def portfolio_detail(request, slug=None):
     if not request.user.is_authenticated():
         raise Http404
 
-
     instance = get_object_or_404(Portfolio, slug=slug)
     share_string = quote_plus(instance.content)
 
@@ -75,7 +75,6 @@ def portfolio_detail(request, slug=None):
             if parent_qs.exists() and parent_qs.count() == 1:
                 parent_obj = parent_qs.first()
 
-
         new_comment, created = Comment.objects.get_or_create(
             user=request.user,
             content_type=content_type,
@@ -95,6 +94,7 @@ def portfolio_detail(request, slug=None):
     }
     return render(request, "portfolio_detail.html", context)
 
+
 @login_required
 def portfolio_update(request, slug=None):
     # if not request.user.is_staff or not request.user.is_superuser:
@@ -102,7 +102,6 @@ def portfolio_update(request, slug=None):
 
     if not request.user.is_authenticated():
         raise Http404
-
 
     instance = get_object_or_404(Portfolio, slug=slug)
     form = PortfolioForm(request.POST or None, request.FILES or None, instance=instance)
@@ -119,6 +118,8 @@ def portfolio_update(request, slug=None):
     }
     return render(request, "form.html", context)
 
+
+@login_required
 def portfolio_delete(request, slug=None):
     # if not request.user.is_staff or not request.user.is_superuser:
     #     raise Http404
@@ -131,6 +132,7 @@ def portfolio_delete(request, slug=None):
     messages.success(request, "Successfully Deleted")
     return redirect("posts:list")
 
+
 def portfolio_list(request, slug=None):
     queryset_list = Portfolio.objects.all()
     categories = Category.objects.all()
@@ -141,8 +143,8 @@ def portfolio_list(request, slug=None):
             Q(title__icontains=query) |
             Q(content__icontains=query) |
             Q(user__first_name__icontains=query) |
-            Q(user__last_name__icontains=query)
-            # Q(category=category)
+            Q(user__last_name__icontains=query) |
+            Q(category=category)
         ).distinct() # 검색 기능 Like %S%
     paginator = Paginator(queryset_list, 10)
     page_request_var = 'page'

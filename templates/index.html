@@ -30,7 +30,7 @@
 						</span>
                         <h3>등록된 프로젝트 찾기</h3>
                         <p>현재 이음마루에 등록된 프로젝트들 중에 당신이 원하는 프로젝트에 참여해보세요. </p>
-                        <p><a href="#" class="btn btn-white btn-outline">프로젝트 찾기</a></p>
+                        <p><a href="{% url 'posts:list' %}" class="btn btn-white btn-outline">프로젝트 찾기</a></p>
                     </div>
                 </div>
                 <div class="feature feature-2 animate-box" data-animate-effect="fadeInUp">
@@ -40,7 +40,7 @@
 						</span>
                         <h3>이음마루 파트너스 목록</h3>
                         <p>당신이 원하는 역량을 보유한 파트너의 목록을 지금 당장 찾아보세요. </p>
-                        <p><a href="/posts" class="btn btn-white btn-outline">파트너스 찾기</a></p>
+                        <p><a href="{% url 'profile:list' %}" class="btn btn-white btn-outline">파트너스 찾기</a></p>
                     </div>
                 </div>
                 <div class="feature feature-3 animate-box" data-animate-effect="fadeInUp">
@@ -50,7 +50,7 @@
 						</span>
                         <h3>팀 모집공고 등록</h3>
                         <p>당신이 진행하고 싶은 프로젝트를 직접 등록해보세요. </p>
-                        <p><a href="#" class="btn btn-white btn-outline">프로젝트 등록</a></p>
+                        <p><a href="{% url 'posts:create' %}" class="btn btn-white btn-outline">프로젝트 등록</a></p>
                     </div>
                 </div>
             </div>

@@ -120,7 +120,7 @@ def post_list(request):
 
     context = {
         "object_list": queryset,
-        "title": "파트너스 찾기",
+        "title": "프로젝트 찾기",
         "page_request_var": page_request_var,
         "today": today,
     }

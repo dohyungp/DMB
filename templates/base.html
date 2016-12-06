@@ -76,11 +76,11 @@
                 </div>
                 <div class="col-xs-8 text-right menu-1">
                     <ul>
-                        <li class="active"><a href="/">이음마루</a></li>
-                        <li><a href="#">파트너스 등록</a></li>
-                        <li><a href="{% url 'posts:list' %}">파트너스 찾기</a></li>
+                        <li><a href="{% url 'profile:create' %}">파트너스 등록</a></li>
+                        <li><a href="{% url 'profile:list' %}">파트너스 찾기</a></li>
                         <li><a href="{% url 'posts:create' %}">프로젝트 등록</a></li>
                         <li><a href="{% url 'posts:list' %}">프로젝트 찾기</a></li>
+                        <li><a href="{% url 'portfolio:list' %}">포트폴리오 찾기</a></li>
                         {% if not request.user.is_authenticated %}<li><a id="login" href="/login" style="color: #1acea6">로그인</a></li>
                         {% else %}<li><a id="login" href="/logout" style="color: #1acea6">로그아웃</a></li>{% endif %}
                     </ul>

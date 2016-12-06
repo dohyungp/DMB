@@ -24,11 +24,11 @@
                     <div class='input-group input-group-lg'>
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-primary dropdown-toggle" name="category" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">분류 <span class="caret"></span></button>
-                            {% for category in  categories%}
-                                <ul class="dropdown-menu">
-                                    <li><a href="?category={{ category }}">{{ category }}</a></li>
-                                </ul>
-                            {% endfor %}
+                            <ul class="dropdown-menu">
+                                {% for category in  categories%}
+                                    <li value="{{ category }}"><a href="?category={{ category }}">{{ category }}</a></li>
+                                {% endfor %}
+                            </ul>
                         </div><!-- /btn-group -->
                         <input class='form-control' type='text' name='q' placeholder='포트폴리오 검색' value='{{ request.GET.q }}'/>
                         <span class='input-group-btn'>

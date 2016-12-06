@@ -25,8 +25,8 @@ def upload_location(instance, filename):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = models.ImageField(upload_to=upload_location,
-                              null=True,
-                              blank=True)
+                               null=True,
+                               blank=True)
     bio = models.TextField(blank=True)
     slug = models.SlugField(unique=True, allow_unicode=True)
 

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load urlify %}
+{% load ratings %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block head_title %}
+    {{ instance.title }} | {{ block.super }}
+{% endblock head_title %}
+
+{% block content %}
+    <header id="gtco-header" class="gtco-cover gtco-cover-xs" role="banner" style="background-image:url({% static 'images/img_bg_1-1.jpg'%});">
+        <div class="overlay"></div>
+        <div class="gtco-container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <div class="display-t">
+                        <div class="display-tc">
+                            <h1 class="animate-box" data-animate-effect="fadeInUp">파트너스 상세보기</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="gtco-features" class="gtco-section animated">
+        <div class='col-sm-6 col-sm-offset-3'>
+            {% if instance.avatar %}
+                <img src='{{ instance.avatar.url }}' class='img-responsive' />
+            {% endif %}
+            <h1>{{ title }} <small>{% if instance.draft %}<span style='color:red;'>초안</span> {% endif %}{{ instance.publish }}</small></h1>
+            {% if instance.user.username %}
+                <p>글쓴이: {{ instance.user.username }}</p>
+            {% endif %}
+        
+
+            <div class='row'>
+                <div class='col-sm-12'>
+                    <div class="post-detail-item">{{ instance.get_markdown }}</div>
+
+                    <hr/>
+                    {% if request.user == instance.user %}
+                        <a href="{{ instance.get_update_url }}" class="btn btn-default" role="button">수정</a>
+                        <a href="{{ instance.get_delete_url }}" class="btn btn-warning" role="button">삭제</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
